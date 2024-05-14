@@ -1,0 +1,48 @@
+.splash-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+.splash-loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+@keyframes splash-loader-container-progress {
+  to {
+    transform: translateX(150%);
+  }
+}
+
+.splash-loader-container-progress {
+  width: 50%;
+  transform: translateX(-150%);
+  box-sizing: border-box;
+  border: 0.125rem solid #018786;
+  animation: 1s linear infinite splash-loader-container-progress;
+}
+
+.splash {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  opacity: 0;
+  transition: z-index 250ms linear, opacity 250ms linear;
+}
+
+.splash-open {
+  z-index: 2500;
+  opacity: 1;
+}
