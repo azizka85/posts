@@ -28,24 +28,34 @@ export default () => {
   const [posts, setPosts] = createSignal<PostData[]>()
 
   const createLike = async (postId: number) => {
-    debugger
-
     if (user()) {
-      const result = await dependency.postService?.createLike(postId, user()!)
+      setPosts(posts => posts?.map(post => post.id === postId ? {...post, loading: true} : post))
 
-      if (result) {
-        setPosts(posts => posts?.map(post => post.id === postId ? {...post, liked: true} : post))
-      }
+      try {
+        const result = await dependency.postService?.createLike(postId, user()!)
+
+        if (result) {
+          setPosts(posts => posts?.map(post => post.id === postId ? {...post, liked: true} : post))
+        }
+      } catch {}
+
+      setPosts(posts => posts?.map(post => post.id === postId ? {...post, loading: false} : post))
     }
   }
 
   const deleteLike = async (postId: number) => {
     if (user()) {
-      const result = await dependency.postService?.deleteLike(postId, user()!)
+      setPosts(posts => posts?.map(post => post.id === postId ? {...post, loading: true} : post))
 
-      if (result) {
-        setPosts(posts => posts?.map(post => post.id === postId ? {...post, liked: false} : post))
-      }
+      try {
+        const result = await dependency.postService?.deleteLike(postId, user()!)
+
+        if (result) {
+          setPosts(posts => posts?.map(post => post.id === postId ? {...post, liked: false} : post))
+        }
+      } catch {}
+
+      setPosts(posts => posts?.map(post => post.id === postId ? {...post, loading: false} : post))
     }
   }
 
@@ -62,6 +72,7 @@ export default () => {
               title={post.title} 
               content={post.abstract ?? ''} 
               liked={post.liked} 
+              loading={post.loading ?? false}
               createLike={createLike}
               deleteLike={deleteLike}
             />

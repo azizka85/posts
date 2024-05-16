@@ -29,11 +29,17 @@ export default () => {
 
   const deleteLike = async (postId: number) => {
     if (user()) {
-      const result = await dependency.postService?.deleteLike(postId, user()!)
+      setPosts(posts => posts?.map(post => post.id === postId ? {...post, loading: true} : post))
 
-      if (result) {
-        setPosts(posts => posts?.filter(post => post.id !== postId))
-      }
+      try {
+        const result = await dependency.postService?.deleteLike(postId, user()!)
+
+        if (result) {
+          setPosts(posts => posts?.filter(post => post.id !== postId))
+        }
+      } catch {}
+
+      setPosts(posts => posts?.map(post => post.id === postId ? {...post, loading: false} : post))
     }
   }
 
@@ -50,6 +56,7 @@ export default () => {
               title={post.title} 
               content={post.abstract ?? ''} 
               liked={post.liked} 
+              loading={post.loading ?? false}
               deleteLike={deleteLike}
             />
           }</For>

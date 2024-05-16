@@ -5,7 +5,8 @@ type Post = {
   title: string
   text?: string
   abstract?: string
-  liked: boolean
+  liked: boolean,
+  loading?: boolean,
   
   author?: User
 }
