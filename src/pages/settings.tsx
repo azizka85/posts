@@ -38,7 +38,7 @@ export default () => {
     const result = await dependency.userService!.edit(
       user()!, 
       {
-        displayEmail: (data.get('displayEmail') as unknown) as boolean,
+        displayEmail: (data.get('displayEmail') as unknown) as boolean | undefined ?? false,
         postsPerPage: (data.get('postsPerPage') as unknown) as number
       }
     )

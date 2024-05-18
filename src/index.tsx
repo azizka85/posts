@@ -26,6 +26,7 @@ const SignIn = lazy(() => import('./pages/sign-in'))
 const LikedPosts = lazy(() => import('./pages/liked-posts'))
 const CreatePost = lazy(() => import('./pages/create-post'))
 const Settings = lazy(() => import('./pages/settings'))
+const Post = lazy(() => import('./pages/post'))
 
 const splashElem = document.querySelector('.splash');
 
@@ -47,6 +48,7 @@ render(() =>
     <Route path="/liked-posts" component={LikedPosts} />
     <Route path="/create-post" component={CreatePost} />
     <Route path="/settings" component={Settings} />
+    <Route path="/:id" component={Post} />
   </Router>, 
   root!
 )
